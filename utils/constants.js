@@ -1,0 +1,1 @@
+export const URL_MESSAGE_ERROR = 'Передана ссылка некорректного формата';
