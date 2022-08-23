@@ -40,7 +40,7 @@ const createMovie = (request, response, next) => {
     image,
     trailerLink,
     thumbnail,
-    owner: request.user._id,
+    owner: request.user.id,
     movieId,
     nameRU,
     nameEN,

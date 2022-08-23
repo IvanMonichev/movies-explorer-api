@@ -1,4 +1,4 @@
-const serverError = ((error, request, response, next) => {
+const errorHandler = ((error, request, response, next) => {
   const { statusCode = 500, message } = error;
 
   response.status(statusCode).send({
@@ -8,4 +8,4 @@ const serverError = ((error, request, response, next) => {
   next();
 });
 
-module.exports = serverError;
+module.exports = errorHandler;

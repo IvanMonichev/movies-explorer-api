@@ -1,14 +1,19 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
+const { getJwtToken } = require('../utils/jwt');
 const NotFoundError = require("../errors/not-found-error");
 const BadRequestError = require("../errors/bad-request-error");
 const ConflictError = require("../errors/conflict-error");
+const UnauthorizedError = require("../errors/unauthorized-error");
 const {
-  USER_NOT_FOUND,
+  USER_UPDATE_NOT_FOUND,
   USER_UPDATE_INCORRECT_DATA,
   EMAIL_ALREADY_EXISTS,
   USER_CREATE_INCORRECT_DATA,
+  USER_NOT_FOUND,
+  INCORRECT_AUTH_DATA
 } = require('../utils/constants.js');
+const { request, response } = require("express");
 
 // Создание пользователя.
 const createUser = (request, response, next) => {
@@ -37,9 +42,46 @@ const createUser = (request, response, next) => {
     .catch(next);
 };
 
+// Авторизация пользователя.
+const loginUser = (request, response, next) => {
+  const { email, password } = request.body;
+
+  User.findOne({ email }).select('+password')
+    .then((user) => {
+      if (!user) {
+        throw new UnauthorizedError(USER_NOT_FOUND);
+      }
+
+      return bcrypt.compare(password, user.password)
+        .then((isValidPassword) => {
+          if (!isValidPassword) {
+            throw new UnauthorizedError(INCORRECT_AUTH_DATA);
+          }
+          const token = getJwtToken(user._id);
+          response.cookie('access_token', token, {
+            maxAge: 1000 * 60 * 60 * 24 * 7,
+            httpOnly: true,
+          });
+
+          return response.send({
+            message: 'Аутентификация успешно выполнена'
+          });
+        });
+    })
+    .catch(next)
+};
+
+const logoutUser = (request, response, next) => {
+  response.clearCookie('access_token', {
+    httpOnly: true,
+  }).send({
+    message: 'Выход из системы успешно выполнен',
+  });
+};
+
 // Получение информации текущего пользователя.
 const getUserInfo = (request, response, next) => {
-  User.findById(request.user._id)
+  User.findById(request.user.id)
     .then((user) => {
       response.send(user);
     })
@@ -50,10 +92,10 @@ const getUserInfo = (request, response, next) => {
 const updateUser = (request, response, next) => {
   const { email, name } = request.body;
 
-  User.findByIdAndUpdate(request.user._id, { email, name }, { runValidators: true })
+  User.findByIdAndUpdate(request.user.id, { email, name }, { runValidators: true })
     .then((user) => {
       if (!user) {
-        throw new NotFoundError(USER_NOT_FOUND);
+        throw new NotFoundError(USER_UPDATE_NOT_FOUND);
       }
       response.send(user);
     })
@@ -72,4 +114,6 @@ module.exports = {
   createUser,
   getUserInfo,
   updateUser,
+  loginUser,
+  logoutUser,
 };
