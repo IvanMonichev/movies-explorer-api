@@ -27,7 +27,7 @@ const movieScheme = new mongoose.Schema(
     trailerLink: {
       type: String,
       required: true,
-      image: {
+      validate: {
         validator: (link) => validator.isURL(link),
         message: URL_MESSAGE_ERROR,
       },
@@ -35,7 +35,7 @@ const movieScheme = new mongoose.Schema(
     thumbnail: {
       type: String,
       required: true,
-      image: {
+      validate: {
         validator: (link) => validator.isURL(link),
         message: URL_MESSAGE_ERROR,
       },
