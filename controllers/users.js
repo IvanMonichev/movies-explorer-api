@@ -22,9 +22,7 @@ const createUser = (request, response, next) => {
 
 // Получение информации текущего пользователя.
 const getUserInfo = (request, response, next) => {
-  const currentUserId = request.user.id;
-
-  User.findById(currentUserId)
+  User.findById(request.user._id)
     .then((user) => {
       response.send(user);
     })
