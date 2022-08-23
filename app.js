@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 const { PORT = 3000 } = process.env;
 const router = require('./routes');
+const errorHandler = require('./middlewares/error-handler')
 
 const app = express();
 
@@ -16,13 +17,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use((request, respnse, next) => {
   request.user = {
-    _id: '6304cc0b7995430037abf04b' // вставьте сюда _id созданного в предыдущем пункте пользователя
+    _id: '630514319ddc93daec89fb10' // вставьте сюда _id созданного в предыдущем пункте пользователя
   };
 
   next();
 });
 
 app.use(router);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Сервер успешно запущен. Порт: ${PORT}`);
