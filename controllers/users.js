@@ -29,6 +29,13 @@ const getUserInfo = (request, response, next) => {
     .catch(next);
 };
 
+// Обновление информации о пользователе.
+const updateUser = (request, response, next) => {
+  const {email, name} = request.body;
+
+  User.findByIdAndUpdate(request.user._id, {email, name}, {runValidators: true})
+};
+
 module.exports = {
   createUser,
   getUserInfo,
