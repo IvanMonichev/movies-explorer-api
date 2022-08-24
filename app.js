@@ -6,10 +6,11 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
 const { PORT, DB_HOST } = require('./utils/config');
-
+const limiter = require('./utils/limiter');
 const router = require('./routes');
 const errorHandler = require('./middlewares/error-handler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(requestLogger);
+app.use(limiter);
 app.use(helmet());
 app.use(router);
 app.use(errorLogger);
