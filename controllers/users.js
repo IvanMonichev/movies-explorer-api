@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
-const { getJwtToken } = require('../utils/jwt');
+const jwt = require('jsonwebtoken');
 const NotFoundError = require("../errors/not-found-error");
 const BadRequestError = require("../errors/bad-request-error");
 const ConflictError = require("../errors/conflict-error");
@@ -13,7 +13,8 @@ const {
   USER_NOT_FOUND,
   INCORRECT_AUTH_DATA
 } = require('../utils/constants.js');
-const { request, response } = require("express");
+const { JWT_SECRET } = require('../utils/config');
+
 
 // Создание пользователя.
 const createUser = (request, response, next) => {
@@ -57,7 +58,8 @@ const loginUser = (request, response, next) => {
           if (!isValidPassword) {
             throw new UnauthorizedError(INCORRECT_AUTH_DATA);
           }
-          const token = getJwtToken(user._id);
+
+          const token = jwt.sign( { _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
           response.cookie('access_token', token, {
             maxAge: 1000 * 60 * 60 * 24 * 7,
             httpOnly: true,
@@ -71,7 +73,7 @@ const loginUser = (request, response, next) => {
     .catch(next)
 };
 
-const logoutUser = (request, response, next) => {
+const logoutUser = (request, response) => {
   response.clearCookie('access_token', {
     httpOnly: true,
   }).send({
@@ -81,7 +83,7 @@ const logoutUser = (request, response, next) => {
 
 // Получение информации текущего пользователя.
 const getUserInfo = (request, response, next) => {
-  User.findById(request.user.id)
+  User.findById(request.user._id)
     .then((user) => {
       response.send(user);
     })
@@ -92,7 +94,7 @@ const getUserInfo = (request, response, next) => {
 const updateUser = (request, response, next) => {
   const { email, name } = request.body;
 
-  User.findByIdAndUpdate(request.user.id, { email, name }, { runValidators: true })
+  User.findByIdAndUpdate(request.user._id, { email, name }, { runValidators: true })
     .then((user) => {
       if (!user) {
         throw new NotFoundError(USER_UPDATE_NOT_FOUND);

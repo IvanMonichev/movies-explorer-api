@@ -40,7 +40,7 @@ const createMovie = (request, response, next) => {
     image,
     trailerLink,
     thumbnail,
-    owner: request.user.id,
+    owner: request.user._id,
     movieId,
     nameRU,
     nameEN,
@@ -55,7 +55,7 @@ const createMovie = (request, response, next) => {
     });
 };
 
-const deleteCard = (request, response, next) => {
+const deleteMovie = (request, response, next) => {
   const { movieId } = request.params;
 
   Movie.findById(movieId)
@@ -83,5 +83,5 @@ const deleteCard = (request, response, next) => {
 module.exports = {
   getMovies,
   createMovie,
-  deleteCard,
+  deleteMovie,
 }
