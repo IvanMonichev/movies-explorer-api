@@ -24,6 +24,14 @@ const movieScheme = new mongoose.Schema(
       type: String,
       required: true,
     },
+    image: {
+      type: String,
+      required: true,
+      validate: {
+        validator: (link) => validator.isURL(link),
+        message: URL_MESSAGE_ERROR,
+      },
+    },
     trailerLink: {
       type: String,
       required: true,
