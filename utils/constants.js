@@ -10,6 +10,7 @@ const MOVIE_DELETE_INCORRECT_DATA = 'Заданы некорректные да�
 const USER_NOT_FOUND = 'Такого пользователя не существует.';
 const INCORRECT_AUTH_DATA = 'Email или пароль некорректны.';
 const TOKEN_NOT_FOUND = 'Доступ запрещён, необходима авторизация.';
+const PATCH_NOT_FOUND = 'Путь не найден';
 
 module.exports = {
   URL_MESSAGE_ERROR,
@@ -24,4 +25,5 @@ module.exports = {
   USER_NOT_FOUND,
   INCORRECT_AUTH_DATA,
   TOKEN_NOT_FOUND,
+  PATCH_NOT_FOUND,
 };
