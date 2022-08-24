@@ -81,6 +81,7 @@ const logoutUser = (request, response) => {
   });
 };
 
+
 // Получение информации текущего пользователя.
 const getUserInfo = (request, response, next) => {
   User.findById(request.user._id)

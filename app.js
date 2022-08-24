@@ -7,7 +7,8 @@ const { errors } = require('celebrate');
 const { PORT, DB_HOST } = require('./utils/config');
 
 const router = require('./routes');
-const errorHandler = require('./middlewares/error-handler')
+const errorHandler = require('./middlewares/error-handler');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 
@@ -19,7 +20,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+app.use(requestLogger);
 app.use(router);
+app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 
