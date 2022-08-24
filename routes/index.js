@@ -3,7 +3,6 @@ const userRouter = require('./users');
 const moviesRouter = require('./movies');
 const authRouter = require('./auth');
 const { checkAuth } = require('../middlewares/auth');
-const { logoutUser } = require("../controllers/users");
 
 router.use('/', authRouter);
 router.use(checkAuth);

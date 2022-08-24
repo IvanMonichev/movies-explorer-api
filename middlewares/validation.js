@@ -1,7 +1,6 @@
 const { celebrate, Joi } = require('celebrate');
 const validator = require('validator');
 const { URL_MESSAGE_ERROR } = require('../utils/constants');
-const BadRequestError = require('../errors/bad-request-error');
 
 const validateUrl = (value, messageError) => {
   if (validator.isURL(value)) {
@@ -11,10 +10,23 @@ const validateUrl = (value, messageError) => {
   return messageError.message(URL_MESSAGE_ERROR);
 }
 
+const validatePassword = (value, messageError) => {
+  const options = {
+    minLength: 6,
+    minUppercase: 0,
+    minSymbols: 0,
+  }
+  if (validator.isStrongPassword(value, options)) {
+    return value;
+  }
+
+  return messageError.message('Пароль не соответствует требованиям безопасности.');
+}
+
 const createUserValid = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required(),
+    password: Joi.string().required().custom(validatePassword),
     name: Joi.string().min(2).max(30),
   }),
 });
@@ -51,7 +63,7 @@ const createMovieValid = celebrate({
 
 const deleteMovieValid = celebrate({
   params: Joi.object().keys({
-    userId: Joi.string().length(24).hex(),
+    movieId: Joi.string().length(24).hex(),
   }),
 });
 

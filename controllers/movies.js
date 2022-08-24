@@ -67,7 +67,7 @@ const deleteMovie = (request, response, next) => {
       } else {
         Movie.findByIdAndRemove(movieId)
           .then(() => {
-            response.send({message: `Фильм с ID ${movie.id} успешно удалён.`})
+            response.send({message: `Фильм с ID ${movie._id} успешно удалён.`})
           })
           .catch(next);
       }
