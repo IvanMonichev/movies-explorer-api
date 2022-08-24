@@ -8,20 +8,20 @@ const validateUrl = (value, messageError) => {
   }
 
   return messageError.message(URL_MESSAGE_ERROR);
-}
+};
 
 const validatePassword = (value, messageError) => {
   const options = {
     minLength: 6,
     minUppercase: 0,
     minSymbols: 0,
-  }
+  };
   if (validator.isStrongPassword(value, options)) {
     return value;
   }
 
   return messageError.message('Пароль не соответствует требованиям безопасности.');
-}
+};
 
 const createUserValid = celebrate({
   body: Joi.object().keys({
@@ -50,7 +50,7 @@ const createMovieValid = celebrate({
     country: Joi.string().required(),
     director: Joi.string().required(),
     duration: Joi.number().required(),
-    year: Joi.number().required(),
+    year: Joi.string().required(),
     description: Joi.string().required(),
     image: Joi.string().required().custom(validateUrl),
     trailerLink: Joi.string().required().custom(validateUrl),

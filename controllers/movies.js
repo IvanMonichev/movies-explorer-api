@@ -1,19 +1,18 @@
 const Movie = require('../models/movie');
-const BadRequestError = require("../errors/bad-request-error");
-const NotFoundError = require("../errors/not-found-error");
-const ForbiddenError = require("../errors/forbidden-error");
+const BadRequestError = require('../errors/bad-request-error');
+const NotFoundError = require('../errors/not-found-error');
+const ForbiddenError = require('../errors/forbidden-error');
 const {
   MOVIE_CREATE_INCORRECT_DATA,
   MOVIE_NOT_FOUND,
   MOVIE_ACCESS_DENIED,
   MOVIE_DELETE_INCORRECT_DATA,
-} = require("../utils/constants");
-
+} = require('../utils/constants');
 
 const getMovies = (request, response, next) => {
   Movie.find({})
     .then((movies) => response.send(movies))
-    .catch(next)
+    .catch(next);
 };
 
 // Создаёт фильм.
@@ -67,7 +66,7 @@ const deleteMovie = (request, response, next) => {
       } else {
         Movie.findByIdAndRemove(movieId)
           .then(() => {
-            response.send({message: `Фильм с ID ${movie._id} успешно удалён.`})
+            response.send({ message: `Фильм с ID ${movie._id} успешно удалён.` });
           })
           .catch(next);
       }
@@ -84,4 +83,4 @@ module.exports = {
   getMovies,
   createMovie,
   deleteMovie,
-}
+};

@@ -1,20 +1,19 @@
 const bcrypt = require('bcryptjs');
-const User = require('../models/user');
 const jwt = require('jsonwebtoken');
-const NotFoundError = require("../errors/not-found-error");
-const BadRequestError = require("../errors/bad-request-error");
-const ConflictError = require("../errors/conflict-error");
-const UnauthorizedError = require("../errors/unauthorized-error");
+const User = require('../models/user');
+const NotFoundError = require('../errors/not-found-error');
+const BadRequestError = require('../errors/bad-request-error');
+const ConflictError = require('../errors/conflict-error');
+const UnauthorizedError = require('../errors/unauthorized-error');
 const {
   USER_UPDATE_NOT_FOUND,
   USER_UPDATE_INCORRECT_DATA,
   EMAIL_ALREADY_EXISTS,
   USER_CREATE_INCORRECT_DATA,
   USER_NOT_FOUND,
-  INCORRECT_AUTH_DATA
-} = require('../utils/constants.js');
+  INCORRECT_AUTH_DATA,
+} = require('../utils/constants');
 const { JWT_SECRET } = require('../utils/config');
-
 
 // Создание пользователя.
 const createUser = (request, response, next) => {
@@ -28,7 +27,7 @@ const createUser = (request, response, next) => {
         name,
       })
         .then(() => {
-          response.status(201).send({ email, name })
+          response.status(201).send({ email, name });
         })
         .catch((error) => {
           if (error.name === 'ValidationError') {
@@ -59,18 +58,18 @@ const loginUser = (request, response, next) => {
             throw new UnauthorizedError(INCORRECT_AUTH_DATA);
           }
 
-          const token = jwt.sign( { _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+          const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
           response.cookie('access_token', token, {
             maxAge: 1000 * 60 * 60 * 24 * 7,
             httpOnly: true,
           });
 
           return response.send({
-            message: 'Аутентификация успешно выполнена'
+            message: 'Аутентификация успешно выполнена',
           });
         });
     })
-    .catch(next)
+    .catch(next);
 };
 
 const logoutUser = (request, response) => {
@@ -80,7 +79,6 @@ const logoutUser = (request, response) => {
     message: 'Выход из системы успешно выполнен',
   });
 };
-
 
 // Получение информации текущего пользователя.
 const getUserInfo = (request, response, next) => {
@@ -106,7 +104,7 @@ const updateUser = (request, response, next) => {
       if (error.name === 'ValidationError') {
         next(new BadRequestError(USER_UPDATE_INCORRECT_DATA));
       } else if (error.code === 11000) {
-        next(new ConflictError(EMAIL_ALREADY_EXISTS))
+        next(new ConflictError(EMAIL_ALREADY_EXISTS));
       } else {
         next(error);
       }
