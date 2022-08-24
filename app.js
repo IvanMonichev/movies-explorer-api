@@ -3,14 +3,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const { PORT, DB_HOST } = require('./utils/config');
 
-const { PORT = 3000 } = process.env;
 const router = require('./routes');
 const errorHandler = require('./middlewares/error-handler')
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/movies-explorer-db', {
+mongoose.connect(DB_HOST, {
   useNewUrlParser: true,
 });
 
