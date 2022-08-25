@@ -1,6 +1,6 @@
 # movies-explorer-api
 ## О проекте
-___
+
 ### Описание
 **Веб-приложение «Movies Explorer»** – это дипломный проект, который был разработан в рамках изучения
 онлайн-курса [Яндекс.Практикум](https://practicum.yandex.ru/) на освоение профессии «Веб-разработчик».
@@ -19,7 +19,7 @@ ___
 - Mongoose
 - JavaScript
 ## Техническая часть
-___
+
 ### Адреса
 - URL приложения: [https://api.myfilms.nomoredomains.sbs](https://api.myfilms.nomoredomains.sbs)
 - IP адрес: 51.250.68.212 
