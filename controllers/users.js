@@ -100,8 +100,8 @@ const updateUser = (request, response, next) => {
       }
       response.send({
         _id: user._id,
-        email: user.email,
-        name: user.name,
+        email,
+        name,
       });
     })
     .catch((error) => {
