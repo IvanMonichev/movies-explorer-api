@@ -98,7 +98,11 @@ const updateUser = (request, response, next) => {
       if (!user) {
         throw new NotFoundError(USER_UPDATE_NOT_FOUND);
       }
-      response.send(user);
+      response.send({
+        _id: user._id,
+        email: user.email,
+        name: user.name,
+      });
     })
     .catch((error) => {
       if (error.name === 'ValidationError') {
