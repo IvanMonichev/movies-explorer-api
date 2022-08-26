@@ -10,7 +10,6 @@ const {
   USER_UPDATE_INCORRECT_DATA,
   EMAIL_ALREADY_EXISTS,
   USER_CREATE_INCORRECT_DATA,
-  USER_NOT_FOUND,
   INCORRECT_AUTH_DATA,
 } = require('../utils/constants');
 const { JWT_SECRET } = require('../utils/config');
@@ -49,7 +48,7 @@ const loginUser = (request, response, next) => {
   User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        throw new UnauthorizedError(USER_NOT_FOUND);
+        throw new NotFoundError(INCORRECT_AUTH_DATA);
       }
 
       return bcrypt.compare(password, user.password)
