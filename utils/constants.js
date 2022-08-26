@@ -9,7 +9,13 @@ const MOVIE_ACCESS_DENIED = 'Текущий пользователь не явл
 const MOVIE_DELETE_INCORRECT_DATA = 'Заданы некорректные данные при удалении фильма.';
 const INCORRECT_AUTH_DATA = 'Email или пароль некорректны.';
 const TOKEN_NOT_FOUND = 'Доступ запрещён, необходима авторизация.';
-const PATCH_NOT_FOUND = 'Путь не найден';
+const PATCH_NOT_FOUND = 'Путь не найден.';
+const INCORRECT_EMAIL = 'Переданный E-Mail неккоректного формата.';
+const MIN_LENGTH_ERROR = 'Содержит меньше 2-ух символов.';
+const MAX_LENGTH_ERROR = 'Содержит больше 30 символов.';
+const MOVIE_SUCCESS_REMOVE = 'Фильм успешно удалён.';
+const USER_SUCCESS_AUTH = 'Аутентификация успешно выполнена.';
+const USER_SUCCESS_EXIT = 'Выход из системы успешно выполнен';
 
 module.exports = {
   URL_MESSAGE_ERROR,
@@ -24,4 +30,10 @@ module.exports = {
   INCORRECT_AUTH_DATA,
   TOKEN_NOT_FOUND,
   PATCH_NOT_FOUND,
+  INCORRECT_EMAIL,
+  MIN_LENGTH_ERROR,
+  MAX_LENGTH_ERROR,
+  MOVIE_SUCCESS_REMOVE,
+  USER_SUCCESS_AUTH,
+  USER_SUCCESS_EXIT,
 };

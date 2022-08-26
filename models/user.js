@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const { INCORRECT_EMAIL, MIN_LENGTH_ERROR, MAX_LENGTH_ERROR } = require('../utils/constants');
 
 const userScheme = new mongoose.Schema(
   {
@@ -9,7 +10,7 @@ const userScheme = new mongoose.Schema(
       unique: true,
       validate: {
         validator: (email) => validator.isEmail(email),
-        message: 'Переданный E-Mail неккоректного формата',
+        message: INCORRECT_EMAIL,
       },
     },
     password: {
@@ -20,8 +21,8 @@ const userScheme = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      minlength: [2, 'Содержит меньше 2-ух символов'],
-      maxlength: [30, 'Содержит больше 30 символов'],
+      minlength: [2, MIN_LENGTH_ERROR],
+      maxlength: [30, MAX_LENGTH_ERROR],
     },
   },
 );

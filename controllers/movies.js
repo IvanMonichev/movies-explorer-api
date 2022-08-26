@@ -7,6 +7,7 @@ const {
   MOVIE_NOT_FOUND,
   MOVIE_ACCESS_DENIED,
   MOVIE_DELETE_INCORRECT_DATA,
+  MOVIE_SUCCESS_REMOVE,
 } = require('../utils/constants');
 
 const getMovies = (request, response, next) => {
@@ -66,7 +67,7 @@ const deleteMovie = (request, response, next) => {
       } else {
         Movie.findByIdAndRemove(movieId)
           .then(() => {
-            response.send({ message: `Фильм с ID ${movie._id} успешно удалён.` });
+            response.send({ message: MOVIE_SUCCESS_REMOVE });
           })
           .catch(next);
       }
@@ -74,8 +75,9 @@ const deleteMovie = (request, response, next) => {
     .catch((error) => {
       if (error.name === 'CastError') {
         next(new BadRequestError(MOVIE_DELETE_INCORRECT_DATA));
+      } else {
+        next(error);
       }
-      next(error);
     });
 };
 

@@ -10,7 +10,7 @@ const {
   USER_UPDATE_INCORRECT_DATA,
   EMAIL_ALREADY_EXISTS,
   USER_CREATE_INCORRECT_DATA,
-  INCORRECT_AUTH_DATA,
+  INCORRECT_AUTH_DATA, USER_SUCCESS_AUTH, USER_SUCCESS_EXIT,
 } = require('../utils/constants');
 const { JWT_SECRET } = require('../utils/config');
 
@@ -64,7 +64,7 @@ const loginUser = (request, response, next) => {
           });
 
           return response.send({
-            message: 'Аутентификация успешно выполнена',
+            message: USER_SUCCESS_AUTH,
           });
         });
     })
@@ -75,7 +75,7 @@ const logoutUser = (request, response) => {
   response.clearCookie('access_token', {
     httpOnly: true,
   }).send({
-    message: 'Выход из системы успешно выполнен',
+    message: USER_SUCCESS_EXIT,
   });
 };
 
