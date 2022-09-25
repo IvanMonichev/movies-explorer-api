@@ -16,7 +16,7 @@ const { JWT_SECRET } = require('../utils/config');
 
 // Создание пользователя.
 const createUser = (request, response, next) => {
-  const { email, password, name } = request.body;
+  const { name, email, password } = request.body;
 
   bcrypt.hash(password, 10)
     .then((hash) => {
