@@ -10,23 +10,10 @@ const validateUrl = (value, messageError) => {
   return messageError.message(URL_MESSAGE_ERROR);
 };
 
-const validatePassword = (value, messageError) => {
-  const options = {
-    minLength: 6,
-    minUppercase: 0,
-    minSymbols: 0,
-  };
-  if (validator.isStrongPassword(value, options)) {
-    return value;
-  }
-
-  return messageError.message('Пароль не соответствует требованиям безопасности.');
-};
-
 const createUserValid = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().custom(validatePassword),
+    password: Joi.string().required().min(6),
     name: Joi.string().required().min(2).max(30),
   }),
 });
