@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
+const cors = require('cors');
 const { PORT, DB_HOST } = require('./utils/config');
 const limiter = require('./utils/limiter');
 const router = require('./routes');
@@ -19,6 +20,18 @@ mongoose.connect(DB_HOST, {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const options = {
+  origin: [
+    'http://localhost:3000',
+  ],
+  allowedHeaders: ['Content-Type', 'origin'],
+  methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+  preflightContinue: false,
+  credentials: true,
+};
+
+app.use(cors(options));
 app.use(cookieParser());
 app.use(requestLogger);
 app.use(limiter);
