@@ -62,7 +62,7 @@ const loginUser = (request, response, next) => {
             maxAge: 1000 * 60 * 60 * 24 * 7,
             httpOnly: true,
             sameSite: 'none',
-            Secure: true,
+            secure: true,
           });
 
           return response.send({
