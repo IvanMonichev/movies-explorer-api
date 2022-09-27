@@ -76,6 +76,8 @@ const loginUser = (request, response, next) => {
 const logoutUser = (request, response) => {
   response.clearCookie('access_token', {
     httpOnly: true,
+    sameSite: 'none',
+    secure: true,
   }).send({
     message: USER_SUCCESS_EXIT,
   });
