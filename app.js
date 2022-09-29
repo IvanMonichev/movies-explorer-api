@@ -38,6 +38,7 @@ app.use(cors(options));
 app.use(cookieParser());
 app.use(requestLogger);
 app.use(limiter);
+app.use(helmet());
 app.use(router);
 app.use(errorLogger);
 app.use(errors());
