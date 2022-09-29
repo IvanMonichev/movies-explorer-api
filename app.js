@@ -25,6 +25,8 @@ const options = {
   origin: [
     'http://localhost:3000',
     'https://localhost:3000',
+    'http://myfilms.nomoredomains.icu',
+    'https://myfilms.nomoredomains.icu',
   ],
   allowedHeaders: ['Content-Type', 'origin'],
   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
