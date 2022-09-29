@@ -31,6 +31,7 @@ const options = {
   allowedHeaders: ['Content-Type', 'origin'],
   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
   preflightContinue: false,
+  credentials: true,
 };
 
 app.use(cors(options));
