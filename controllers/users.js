@@ -61,7 +61,7 @@ const loginUser = (request, response, next) => {
           response.cookie('access_token', token, {
             maxAge: 1000 * 60 * 60 * 24 * 7,
             httpOnly: true,
-            sameSite: true,
+            sameSite: 'strict',
           });
 
           return response.send({
@@ -75,8 +75,7 @@ const loginUser = (request, response, next) => {
 const logoutUser = (request, response) => {
   response.clearCookie('access_token', {
     httpOnly: true,
-    sameSite: true,
-    secure: true,
+    sameSite: 'strict',
   }).send({
     message: USER_SUCCESS_EXIT,
   });
