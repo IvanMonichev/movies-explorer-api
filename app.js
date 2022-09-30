@@ -28,7 +28,7 @@ const options = {
     'http://myfilms.nomoredomains.icu',
     'https://myfilms.nomoredomains.icu',
   ],
-  allowedHeaders: ['Content-Type', 'origin'],
+  allowedHeaders: ['Content-Type', 'origin', 'Accept', 'Set-Cookie'],
   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
   preflightContinue: false,
   credentials: true,
