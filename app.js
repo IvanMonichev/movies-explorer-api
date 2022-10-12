@@ -23,10 +23,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const options = {
   origin: [
-    'http://localhost:3000',
-    'https://localhost:3000',
-    'http://myfilms.nomoredomains.icu',
-    'https://myfilms.nomoredomains.icu',
+    'http://best-film.monichev-id.ru',
+    'https://best-film.monichev-id.ru',
   ],
   allowedHeaders: ['Content-Type', 'origin', 'Accept', 'Set-Cookie'],
   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
